@@ -14,6 +14,7 @@ override: false
 # Put your favicons into `hexo-site/source/` or `hexo-site/themes/next/source/images/` directory.
 # Default NexT favicons placed in `hexo-site/themes/next/source/images/` directory.
 # And if you want to place your icons in `hexo-site/source/`, you must remove `/images` prefix from pathes.
+avatar: /images/avatar.gif
 favicon:
   small: /images/favicon-16x16.png
   medium: /images/favicon-32x32.png
