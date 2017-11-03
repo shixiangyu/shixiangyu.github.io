@@ -6,4 +6,4 @@ node_modules/
 public/
 .deploy*/
 scaffolds/
-themes/landscape
+themes/landscape/
