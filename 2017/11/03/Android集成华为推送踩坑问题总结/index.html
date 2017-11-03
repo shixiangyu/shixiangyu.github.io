@@ -87,10 +87,10 @@
 <meta property="og:description" content="恩,这个需求是cto老板提的, 所以不管华为push的集成过程有多扯淡多贱(华为push论坛说的,不是我ma的), 也得遇山开山, 逢水搭桥…… 先总结遇到的几大坑位:  使用老版push还是新版push PushReceiver中的onEvent()回调触发问题 APP接收到推送后,点击消息,总是会先打开启动页">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2017/11/03/Android集成华为推送踩坑问题总结/hupush.jpeg">
-<meta property="og:image" content="http://yoursite.com/2017/11/03/Android集成华为推送踩坑问题总结/Android集成华为推送踩坑问题总结/onevent.jpeg">
-<meta property="og:image" content="http://yoursite.com/2017/11/03/Android集成华为推送踩坑问题总结/Android集成华为推送踩坑问题总结/servergeshi.jpeg">
-<meta property="og:image" content="http://yoursite.com/2017/11/03/Android集成华为推送踩坑问题总结/Android集成华为推送踩坑问题总结/client.jpeg">
-<meta property="og:updated_time" content="2017-11-03T10:48:49.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/11/03/Android集成华为推送踩坑问题总结/onevent.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/11/03/Android集成华为推送踩坑问题总结/servergeshi.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/11/03/Android集成华为推送踩坑问题总结/client.jpeg">
+<meta property="og:updated_time" content="2017-11-03T10:53:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android集成华为推送踩坑问题总结">
 <meta name="twitter:description" content="恩,这个需求是cto老板提的, 所以不管华为push的集成过程有多扯淡多贱(华为push论坛说的,不是我ma的), 也得遇山开山, 逢水搭桥…… 先总结遇到的几大坑位:  使用老版push还是新版push PushReceiver中的onEvent()回调触发问题 APP接收到推送后,点击消息,总是会先打开启动页">
@@ -368,15 +368,15 @@
 <p>话说华为开发者平台提供了新老两个版本的Push SDK, 老版本已经不再维护, 而且也很扯淡的把接入文档下架了, 新的名字叫HMS Push,论坛上有人ma华为说它新的没整利索,就把老的给撤掉,什么东西,我就不说什么了, 刚开始的时候考虑到新版sdk需要依赖HMS服务以及覆盖率问题, 我们就集成了老版本的push, 华为文档有这么一句话”HMS Push的现有接口兼容对应的老版本的Push接口”,于是客服端和服务端都开始开发了,结果悲剧了, 是的, 客服端兼容了, 但服务端不行了, 新老版本接口参数都不一样, 两端必须同样的版本,这点它的文档中没有丝毫说明…后来就开始网上找服务端接入文档, 成功接入后, 却发现又碰到了老push不稳定的问题……</p>
 <p>最终的最终,决定重新集成新版本的push!!!</p>
 <h3 id="2-onEvent回调的问题"><a href="#2-onEvent回调的问题" class="headerlink" title="2.onEvent回调的问题"></a>2.onEvent回调的问题</h3><p>对消息的监听, 提供了4种回调方法,注释写得很清楚, 官网也有相关的解释, 不多说. 这里说一下onEvent方法,当时试了很多次没试出这个回调如何触发(可能是自己粗心大意)</p>
-<p><img src="Android集成华为推送踩坑问题总结/onevent.jpeg" alt="adsfas"></p>
+<img src="/2017/11/03/Android集成华为推送踩坑问题总结/onevent.jpeg" title="tupian">
 <p>后台发送push时必须在自定义内容中加入键值对后才会在客户端点击该条消息后回调onEvenet方法, 另外华为push是不能感知到消息的到达的, 这点需要区分开.</p>
 <h3 id="3-当APP接收到推送后-点击消息-会发现总是会先打开启动页的问题"><a href="#3-当APP接收到推送后-点击消息-会发现总是会先打开启动页的问题" class="headerlink" title="3.当APP接收到推送后,点击消息,会发现总是会先打开启动页的问题"></a>3.当APP接收到推送后,点击消息,会发现总是会先打开启动页的问题</h3><p>这个问题是最坑的,不管你的app是否活着,收到push点击后都会重启一次你的app,这样的体验肯定很有问题,必须解决.同样,华为文档没有任何提示或者说明,我们想着可能需要通过自定义动作才能解决这个问题了,最后事实证明是这样的.于是接着查文档,恩,是的,找到不少自定义行为方面的说明文档, <a href="http://developer.huawei.com/consumer/cn/service/hms/catalog/huaweipush.html?page=hmssdk_huaweipush_devguide_s#2.5%20Push通知栏消息格式说明" target="_blank" rel="external">通知栏消息格式说明,这是链接</a>,个人觉得说的很乱,而且这些都是自己服务端那边发push要使用的message格式,那么客服端代码怎么写呢,总之,比小米push文档差远了,当初接Mi push也没这么折腾人</p>
 <p>先来看看自己服务端接入华为push需要的消息内容格式:</p>
-<p><img src="Android集成华为推送踩坑问题总结/servergeshi.jpeg" alt="服务端消息格式"></p>
+<img src="/2017/11/03/Android集成华为推送踩坑问题总结/servergeshi.jpeg" title="tupian">
 <p>图里红框中的需要正确设置, 第一个type为3表示系统通知栏消息, 第二个是action的type标识, 1表示自定义行为,最重要的就是那个intent了, 至于这个intent怎么来的, 又是怎么用的, 一会详细说明…….</p>
 <p>恩,开始客户端工作:</p>
 <p>不要指望在华为的push文档中找到客户端自定义行为的任何代码示例, 至少目前没有, 还好, 华为还是给了你一点指示的, 进入华为发送push的页面:</p>
-<p><img src="Android集成华为推送踩坑问题总结/client.jpeg" alt="客户端消息代码提示"></p>
+<img src="/2017/11/03/Android集成华为推送踩坑问题总结/client.jpeg" title="tupian">
 <p>瞅了半天,不知道有多少人看不懂,反正开始我没看明白.</p>
 <p>1)  先在AndroidManifest文件中添加一个需要跳转到的Activity, 并加入intent-filter过滤器:    </p>
 <pre><code>&lt;activity
