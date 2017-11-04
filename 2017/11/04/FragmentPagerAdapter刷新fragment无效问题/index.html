@@ -131,7 +131,7 @@
 <meta property="og:site_name" content="Shixiangyu&#39;blog">
 <meta property="og:description" content="前段时间在版本迭代里，一个activity中嵌套了多个fragment，当其中一个或多个数据发生变化时，通过pagerAdapter的notifyDataSetChanged方法去更新或者清空fragment集合重新给fragment设置数据并添加至集合时，最后结果都不能达到预期，数据还是原来的数据。 于是，我们一起来看看原因所在，看看FragmenPagerAdaptere的instantiat">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-04T02:41:58.000Z">
+<meta property="og:updated_time" content="2017-11-04T02:44:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FragmentPagerAdapter刷新fragment无效问题">
 <meta name="twitter:description" content="前段时间在版本迭代里，一个activity中嵌套了多个fragment，当其中一个或多个数据发生变化时，通过pagerAdapter的notifyDataSetChanged方法去更新或者清空fragment集合重新给fragment设置数据并添加至集合时，最后结果都不能达到预期，数据还是原来的数据。 于是，我们一起来看看原因所在，看看FragmenPagerAdaptere的instantiat">
@@ -398,6 +398,7 @@
       
         <p>前段时间在版本迭代里，一个activity中嵌套了多个fragment，当其中一个或多个数据发生变化时，通过pagerAdapter的notifyDataSetChanged方法去更新或者清空fragment集合重新给fragment设置数据并添加至集合时，最后结果都不能达到预期，数据还是原来的数据。</p>
 <p>于是，我们一起来看看原因所在，看看FragmenPagerAdaptere的instantiateItem方法源码就明白了()：</p>
+<a id="more"></a>
 <pre><code>String name = makeFragmentName(container.getId(), itemId);
 Fragment fragment = mFragmentManager.findFragmentByTag(name);
 if (fragment != null) {
