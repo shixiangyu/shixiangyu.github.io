@@ -112,7 +112,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="OOM," />
 
 
 
@@ -124,13 +124,14 @@
 
 
 <meta name="description" content="1、 Android的 java程序为什么容易出现OOM这个问题要涉及到android系统的设置方面了，主要因为Android系统对 dalvik 的 vm heapsize 作了硬性限制，当java进程申请的java空间超过阈值时，就会抛出OOM异常（这个阈值可以是48M、24M、16M等，视机型而定），可以通过命令adb shell getprop | grep dalvik.vm.heapg">
+<meta name="keywords" content="OOM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析android的OOM问题">
 <meta property="og:url" content="http://yoursite.com/2017/11/03/浅析android的OOM问题/index.html">
 <meta property="og:site_name" content="Shixiangyu&#39;blog">
 <meta property="og:description" content="1、 Android的 java程序为什么容易出现OOM这个问题要涉及到android系统的设置方面了，主要因为Android系统对 dalvik 的 vm heapsize 作了硬性限制，当java进程申请的java空间超过阈值时，就会抛出OOM异常（这个阈值可以是48M、24M、16M等，视机型而定），可以通过命令adb shell getprop | grep dalvik.vm.heapg">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-03T11:50:36.000Z">
+<meta property="og:updated_time" content="2017-11-04T02:41:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析android的OOM问题">
 <meta name="twitter:description" content="1、 Android的 java程序为什么容易出现OOM这个问题要涉及到android系统的设置方面了，主要因为Android系统对 dalvik 的 vm heapsize 作了硬性限制，当java进程申请的java空间超过阈值时，就会抛出OOM异常（这个阈值可以是48M、24M、16M等，视机型而定），可以通过命令adb shell getprop | grep dalvik.vm.heapg">
@@ -444,6 +445,12 @@ activityManager.getMemoryClass();
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/OOM/" rel="tag"># OOM</a>
+          
+        </div>
+      
 
       
       
@@ -561,6 +568,15 @@ activityManager.getMemoryClass();
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
