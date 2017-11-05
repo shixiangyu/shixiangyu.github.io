@@ -123,13 +123,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shixiangyu&#39;blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)  沉浸式状态栏指的是，状态栏隐藏，在手指做了相关操作后，状态栏显示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="沉浸式,透明式,可变状态栏解读">
+<meta property="og:url" content="http://yoursite.com/2017/11/05/沉浸式-透明式-可变状态栏解读/index.html">
 <meta property="og:site_name" content="Shixiangyu&#39;blog">
+<meta property="og:description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)  沉浸式状态栏指的是，状态栏隐藏，在手指做了相关操作后，状态栏显示">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5878491-ee92fde701bf4076.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5878491-9a354df989ebf3a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-05T02:27:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shixiangyu&#39;blog">
+<meta name="twitter:title" content="沉浸式,透明式,可变状态栏解读">
+<meta name="twitter:description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)  沉浸式状态栏指的是，状态栏隐藏，在手指做了相关操作后，状态栏显示">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5878491-ee92fde701bf4076.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -159,13 +166,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/05/沉浸式-透明式-可变状态栏解读/"/>
 
 
 
 
 
-  <title>Shixiangyu'blog</title>
+  <title>沉浸式,透明式,可变状态栏解读 | Shixiangyu'blog</title>
   
 
 
@@ -184,8 +191,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -288,9 +294,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -320,9 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/沉浸式-透明式-可变状态栏解读/" itemprop="url">沉浸式,透明式,可变状态栏解读</a></h1>
+          <h1 class="post-title" itemprop="name headline">沉浸式,透明式,可变状态栏解读</h1>
         
 
         <div class="post-meta">
@@ -394,9 +398,7 @@
       
 
       
-        
-          
-            <p>最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。</p>
+        <p>最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。</p>
 <h4 id="android的状态栏有三种不同状态，分别是"><a href="#android的状态栏有三种不同状态，分别是" class="headerlink" title="android的状态栏有三种不同状态，分别是:"></a>android的状态栏有三种不同状态，分别是:</h4><ul>
 <li>沉浸式状态栏</li>
 <li>透明状态栏(又可分为“半透明”和“全透明”）(API&gt;=19)</li>
@@ -427,8 +429,6 @@
 <p>此时对于在5.0和6.0之间的系统遇到以上这种情况不就悲催了，而且你是无法去完美适配的，除非你的app不讲究一致性和协调美，因为google没给你方法，唉。</p>
 <p>在实际开发中，我们要做不同的适配，针对不同的sdk运用不同style，在4.4以下使用默认的，完全不做透明处理；在4.4 和5.0之间做成半透明；5.0以上其实已经可以做成全透明了，但是会有状态栏文字颜色不能修改，因为6.0以后才能修改状态栏的文字颜色，这时候很容易导致状态栏的文字颜色和下面的颜色重叠，对于这种情况通常下可做成百分之五十的透明色，当然这个要根据实际情况处理，如果不会出现重叠或者无关紧要，可直接做成全透明；对于6.0以上的就完全可以全透明了</p>
 
-          
-        
       
     </div>
     
@@ -445,159 +445,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/04/FragmentPagerAdapter刷新fragment无效问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="shi xiangyu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shixiangyu'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/04/FragmentPagerAdapter刷新fragment无效问题/" itemprop="url">FragmentPagerAdapter刷新fragment无效问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T10:35:00+08:00">
-                2017-11-04
-              </time>
+              <a href="/2017/11/04/FragmentPagerAdapter刷新fragment无效问题/" rel="next" title="FragmentPagerAdapter刷新fragment无效问题">
+                <i class="fa fa-chevron-left"></i> FragmentPagerAdapter刷新fragment无效问题
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>前段时间在版本迭代里，一个activity中嵌套了多个fragment，当其中一个或多个数据发生变化时，通过pagerAdapter的notifyDataSetChanged方法去更新或者清空fragment集合重新给fragment设置数据并添加至集合时，最后结果都不能达到预期，数据还是原来的数据。</p>
-<p>于是，我们一起来看看原因所在，看看FragmenPagerAdaptere的instantiateItem方法源码就明白了()：</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/04/FragmentPagerAdapter刷新fragment无效问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -607,315 +476,24 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/Android集成华为推送踩坑问题总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="shi xiangyu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shixiangyu'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/03/Android集成华为推送踩坑问题总结/" itemprop="url">Android集成华为推送踩坑问题总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T18:39:48+08:00">
-                2017-11-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>恩,这个需求是cto老板提的, 所以不管华为push的集成过程有多扯淡多贱(华为push论坛说的,不是我ma的), 也得遇山开山, 逢水搭桥……</p>
-<p>先总结遇到的几大坑位:</p>
-<ol>
-<li>使用老版push还是新版push</li>
-<li>PushReceiver中的onEvent()回调触发问题</li>
-<li>APP接收到推送后,点击消息,总是会先打开启动页</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/03/Android集成华为推送踩坑问题总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/03/浅析android的OOM问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="shi xiangyu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shixiangyu'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/03/浅析android的OOM问题/" itemprop="url">浅析android的OOM问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T16:17:36+08:00">
-                2017-11-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="1、-Android的-java程序为什么容易出现OOM"><a href="#1、-Android的-java程序为什么容易出现OOM" class="headerlink" title="1、 Android的 java程序为什么容易出现OOM"></a>1、 Android的 java程序为什么容易出现OOM</h3><p>这个问题要涉及到android系统的设置方面了，主要因为Android系统对 dalvik<br> 的 vm heapsize 作了硬性限制，当java进程申请的java空间超过阈值时，就会抛出OOM异常（这个阈值可以是48M、24M、16M等，视机型而定），可以通过命令<code>adb shell getprop | grep dalvik.vm.heapgrowthlimit</code>查看此值。也可在代码中通过api来获取该数值</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/03/浅析android的OOM问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
+          
+
+
+          
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTY0NC84MjA4"></div>
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
   
 
-
-          </div>
-          
-
-
-          
 
         </div>
         
@@ -936,8 +514,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1003,6 +590,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#android的状态栏有三种不同状态，分别是"><span class="nav-number">1.</span> <span class="nav-text">android的状态栏有三种不同状态，分别是:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#半透明状态栏"><span class="nav-number">2.</span> <span class="nav-text">半透明状态栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全透明状态栏"><span class="nav-number">3.</span> <span class="nav-text">全透明状态栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变色状态栏"><span class="nav-number">4.</span> <span class="nav-text">变色状态栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#伪透明状态栏"><span class="nav-number">5.</span> <span class="nav-text">伪透明状态栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#真透明状态栏"><span class="nav-number">6.</span> <span class="nav-text">真透明状态栏</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1122,6 +725,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -1150,6 +757,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
