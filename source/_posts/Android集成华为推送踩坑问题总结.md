@@ -3,6 +3,7 @@ title: Android集成华为推送踩坑问题总结
 date: 2017-11-03 18:39:48
 categories: android
 tags:
+   - android push
 ---
 
 恩,这个需求是cto老板提的, 所以不管华为push的集成过程有多扯淡多贱(华为push论坛说的,不是我ma的), 也得遇山开山, 逢水搭桥......

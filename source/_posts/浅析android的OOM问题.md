@@ -3,6 +3,7 @@ title: 浅析android的OOM问题
 date: 2017-11-03 16:17:36
 categories: android
 tags:
+   - OOM
 ---
 
 ### 1、 Android的 java程序为什么容易出现OOM
