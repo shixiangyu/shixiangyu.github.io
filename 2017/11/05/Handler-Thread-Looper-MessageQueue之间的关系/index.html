@@ -131,7 +131,7 @@
 <meta property="og:site_name" content="Shixiangyu&#39;blog">
 <meta property="og:description" content="Android 是由事件驱动的，在Android中，主线程（也就是UI线程）是不安全的，当在主线程处理消息过长时，非常容易发生ANR（Application Not Responding）问题；其次，如果我们在子线程中尝试进行UI的操作，程序就可能还会直接崩溃，这就是UI线程被阻塞导致的，归根结底其实是Looper被当前事件（也就是当前正在处理的消息）阻塞住导致的。在android系统中Loope">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-05T08:21:47.000Z">
+<meta property="og:updated_time" content="2017-11-05T08:23:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Handler, Thread, Looper, MessageQueue之间的关系">
 <meta name="twitter:description" content="Android 是由事件驱动的，在Android中，主线程（也就是UI线程）是不安全的，当在主线程处理消息过长时，非常容易发生ANR（Application Not Responding）问题；其次，如果我们在子线程中尝试进行UI的操作，程序就可能还会直接崩溃，这就是UI线程被阻塞导致的，归根结底其实是Looper被当前事件（也就是当前正在处理的消息）阻塞住导致的。在android系统中Loope">
@@ -397,6 +397,7 @@
 
       
         <p>Android 是由事件驱动的，在Android中，主线程（也就是UI线程）是不安全的，当在主线程处理消息过长时，非常容易发生ANR（Application Not Responding）问题；其次，如果我们在子线程中尝试进行UI的操作，程序就可能还会直接崩溃，这就是UI线程被阻塞导致的，归根结底其实是Looper被当前事件（也就是当前正在处理的消息）阻塞住导致的。在android系统中Looper通过Looper.loop() 不断地接收事件、处理事件，每一个点击，触摸包括Activity的生命周期都是运行在 Looper.loop() 的控制之下，如果它停止了，应用也就停止了，所有Looper的生命周期是伴随整个应用的。</p>
+<a id="more"></a>
 <h4 id="我们先来分析一下Handler"><a href="#我们先来分析一下Handler" class="headerlink" title="我们先来分析一下Handler"></a>我们先来分析一下Handler</h4><p>要创建一个Handler对象非常的简单明了，直接进行new一个对象即可mHandler0 = new Handler()，但这里其实还隐藏着一个信息，那就是这个mHadler也就是在此刻和当前线程中的Looper进行了隐匿绑定，看下面代码</p>
 <pre><code>public class MainActivity extends ActionBarActivity {
 
