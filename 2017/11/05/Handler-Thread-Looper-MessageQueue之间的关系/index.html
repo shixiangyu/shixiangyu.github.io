@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="handler," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Android 是由事件驱动的，在Android中，主线程（也就是UI线程）是不安全的，当在主线程处理消息过长时，非常容易发生ANR（Application Not Responding）问题；其次，如果我们在子线程中尝试进行UI的操作，程序就可能还会直接崩溃，这就是UI线程被阻塞导致的，归根结底其实是Looper被当前事件（也就是当前正在处理的消息）阻塞住导致的。在android系统中Loope">
+<meta name="keywords" content="handler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Handler, Thread, Looper, MessageQueue之间的关系">
+<meta property="og:url" content="http://yoursite.com/2017/11/05/Handler-Thread-Looper-MessageQueue之间的关系/index.html">
+<meta property="og:site_name" content="Shixiangyu&#39;blog">
+<meta property="og:description" content="Android 是由事件驱动的，在Android中，主线程（也就是UI线程）是不安全的，当在主线程处理消息过长时，非常容易发生ANR（Application Not Responding）问题；其次，如果我们在子线程中尝试进行UI的操作，程序就可能还会直接崩溃，这就是UI线程被阻塞导致的，归根结底其实是Looper被当前事件（也就是当前正在处理的消息）阻塞住导致的。在android系统中Loope">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T08:21:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Handler, Thread, Looper, MessageQueue之间的关系">
+<meta name="twitter:description" content="Android 是由事件驱动的，在Android中，主线程（也就是UI线程）是不安全的，当在主线程处理消息过长时，非常容易发生ANR（Application Not Responding）问题；其次，如果我们在子线程中尝试进行UI的操作，程序就可能还会直接崩溃，这就是UI线程被阻塞导致的，归根结底其实是Looper被当前事件（也就是当前正在处理的消息）阻塞住导致的。在android系统中Loope">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/05/Handler-Thread-Looper-MessageQueue之间的关系/"/>
+
+
+
+
+
+  <title>Handler, Thread, Looper, MessageQueue之间的关系 | Shixiangyu'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shixiangyu'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/Handler-Thread-Looper-MessageQueue之间的关系/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shi xiangyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shixiangyu'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Handler, Thread, Looper, MessageQueue之间的关系</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T16:10:30+08:00">
+                2017-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Android 是由事件驱动的，在Android中，主线程（也就是UI线程）是不安全的，当在主线程处理消息过长时，非常容易发生ANR（Application Not Responding）问题；其次，如果我们在子线程中尝试进行UI的操作，程序就可能还会直接崩溃，这就是UI线程被阻塞导致的，归根结底其实是Looper被当前事件（也就是当前正在处理的消息）阻塞住导致的。在android系统中Looper通过Looper.loop() 不断地接收事件、处理事件，每一个点击，触摸包括Activity的生命周期都是运行在 Looper.loop() 的控制之下，如果它停止了，应用也就停止了，所有Looper的生命周期是伴随整个应用的。</p>
+<h4 id="我们先来分析一下Handler"><a href="#我们先来分析一下Handler" class="headerlink" title="我们先来分析一下Handler"></a>我们先来分析一下Handler</h4><p>要创建一个Handler对象非常的简单明了，直接进行new一个对象即可mHandler0 = new Handler()，但这里其实还隐藏着一个信息，那就是这个mHadler也就是在此刻和当前线程中的Looper进行了隐匿绑定，看下面代码</p>
+<pre><code>public class MainActivity extends ActionBarActivity {
+
+    private Handler mHandler0;
+
+    private Handler mHandler1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mHandler0 = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mHandler1 = new Handler();
+            }
+        }).start();
+    }
+</code></pre><p>这一小段程序代码主要创建了两个Handler对象，其中，一个在主线程中创建，而另外一个则在子线程中创建，现在运行一下程序，则你会发现，在子线程创建的Handler对象竟然会导致程序直接崩溃，提示的错误竟然是Can’t create handler inside thread that has not called Looper.prepare()</p>
+<p>于是我们按照logcat中所说，在子线程中加入Looper.prepare(),即代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">new Thread(new Runnable()&#123;</div><div class="line"></div><div class="line">    @override</div><div class="line">    public void run()&#123;</div><div class="line">        Looper.prepare();</div><div class="line">        mHandler1 = new Handler()</div><div class="line">    &#125;</div><div class="line">&#125;).start();</div></pre></td></tr></table></figure>
+<p>再次运行一下程序，发现程序不会再崩溃了，可是，单单只加这句Looper.prepare()是否就能解决问题了。我们探讨问题，就要知其然，才能了解得更多。我们还是先分析一下源码吧，看看为什么在子线程中没有加Looper.prepare()就会出现崩溃，而主线程中为什么不用加这句代码？我们看下Handler()构造函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public Handler() &#123;</div><div class="line">    this(null, false);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>构造函数直接调用this(null, false)，于是接着看其调用的函数，</p>
+<pre><code>public Handler(Callback callback, boolean async) {
+       if (FIND_POTENTIAL_LEAKS) {
+           final Class&lt;? extends Handler&gt; klass = getClass();
+           if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp;
+               (klass.getModifiers() &amp; Modifier.STATIC) == 0) {
+               Log.w(TAG, &quot;The following Handler class should be static or leaks might occur: &quot; +
+               klass.getCanonicalName());
+           }
+       }
+
+       mLooper = Looper.myLooper();
+       if (mLooper == null) {
+           throw new RuntimeException(
+               &quot;Can&apos;t create handler inside thread that has not called Looper.prepare()&quot;);
+       }
+       mQueue = mLooper.mQueue;
+       mCallback = callback;
+       mAsynchronous = async;
+ }
+</code></pre><p>不难看出，源码中调用了mLooper = Looper.myLooper()方法获取一个Looper对象，若此时Looper对象为null，则会直接抛出一个“Can’t create handler inside thread that has not called Looper.prepare()”异常，那什么时候造成mLooper是为空呢？那就接着分析Looper.myLooper()，</p>
+<pre><code>public static Looper myLooper() {
+     return sThreadLocal.get();
+}
+</code></pre><p>这个方法在sThreadLocal变量中直接取出Looper对象，若sThreadLocal变量中存在Looper对象，则直接返回，若不存在，则直接返回null，而sThreadLocal变量是什么呢？</p>
+<pre><code>static final ThreadLocat&lt;Looper&gt; sThreadLocal = new ThreadLocal&lt;Looper&gt;();
+</code></pre><p>它是本地线程变量，由此看到，我们的判断是正确的，在Looper.prepare()方法中给sThreadLocal变量设置Looper对象，看看源码</p>
+<pre><code>public static void prepare() {
+        prepare(true);
+}
+</code></pre><p>直接调用了带个boolean参数的prepare函数</p>
+<pre><code>private static void prepare(boolean quitAllowed) {
+      if (sThreadLocal.get() != null) {
+            throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);
+      }
+        sThreadLocal.set(new Looper(quitAllowed));
+}
+</code></pre><p>这样也就理解了为什么要先调用Looper.prepare()方法，才能创建Handler对象，才不会导致崩溃。所以我们可以看到，一个线程在调用Looper的静态方法prepare()时，这个线程会新建一个Looper对象，并放入到线程的局部变量中，而这个变量是不和其他线程共享的，但是，仔细想想，为什么主线程就不用调用呢？不要急，我们接着分析一下主线程，我们查看一下ActivityThread中的main()方法，代码如下：</p>
+<pre><code>public static void main(String[] args) {
+    SamplingProfilerIntegration.start();
+
+    // CloseGuard defaults to true and can be quite spammy.  We
+    // disable it here, but selectively enable it later (via
+    // StrictMode) on debug builds, but using DropBox, not logs.
+    CloseGuard.setEnabled(false);
+
+    Environment.initForCurrentUser();
+
+    // Set the reporter for event logging in libcore
+    EventLogger.setReporter(new EventLoggingReporter());
+
+    Security.addProvider(new AndroidKeyStoreProvider());
+
+    // Make sure TrustedCertificateStore looks in the right place for CA certificates
+    final File configDir = Environment.getUserConfigDirectory(UserHandle.myUserId());
+    TrustedCertificateStore.setDefaultUserDirectory(configDir);
+
+    Process.setArgV0(&quot;&lt;pre-initialized&gt;&quot;);
+
+    Looper.prepareMainLooper();
+
+    ActivityThread thread = new ActivityThread();
+    thread.attach(false);
+
+    if (sMainThreadHandler == null) {
+        sMainThreadHandler = thread.getHandler();
+    }
+
+    if (false) {
+        Looper.myLooper().setMessageLogging(new
+            LogPrinter(Log.DEBUG, &quot;ActivityThread&quot;));
+    }
+
+    Looper.loop();
+
+    throw new RuntimeException(&quot;Main thread loop unexpectedly exited&quot;);
+}
+</code></pre><p>代码中调用了Looper.prepareMainLooper()方法，而这个方法又会继续调用了Looper.prepare()方法。</p>
+<p>分析到这里已经真相大白，主线程中google工程师已经自动帮我们创建了一个Looper对象了，因此我们不再需要手动再调用Looper.prepare()再创建，而子线程中，因为没有自动帮我们创建Looper对象，因此需要我们手动添加，调用方法是Looper.prepare()，这样，我们才能在子线程中正确地创建Handler对象。</p>
+<h4 id="再来分析Looper"><a href="#再来分析Looper" class="headerlink" title="再来分析Looper"></a>再来分析Looper</h4><p>在上面的过程中，我们对Looper也了解了不少，一个线程仅有一个Looper对象，主线程中的Looper对象是由系统为我们自动创建的，并通过Looper.loop()方法开启消息循环，不停的从MessageQueue中取出msg，然后通过msg.target.dispatchMessage(msg)方法交给对应的Handler的handleMessage()方法进行处理，而不难看出，此时msg.target就是Handler对象。概括性来说，Looper负责的是创建一个MessageQueue对象，然后进入到一个无限循环体中不断取出消息，而这些消息都是由一个或者多个Handler进行创建处理。</p>
+<h4 id="关于MessageQueue"><a href="#关于MessageQueue" class="headerlink" title="关于MessageQueue"></a>关于MessageQueue</h4><p>消息池，负责管理消息队列，实际上Message类有一个next字段，会将Message对象串在一起成为一个消息队列。MessageQueue是在Looper被创建的时候被同时创建的，从下面Looper的构造方法可以看出</p>
+<pre><code>private Looper(boolean quitAllowed) {
+    mQueue = new MessageQueue(quitAllowed);
+    mThread = Thread.currentThread();
+}
+</code></pre><p>仔细想一下上面的Handler的构造方法，其中有这么一行<code>mQueue = mLooper.mQueue;</code> 明白了吧，Looper和Handler拥有的是同一个MessageQueue，也就是说这个queue是由它们两个共同来维护的，其实这也是必须的，Handler通过sendMessage（Message msg）等方法发送消息，然后再通过enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis)方法进行消息入队列操作，而Looper.loop()不停的在从该消息队列中取出消息，然后调用msg.target.dispatchMessage(msg)去处理该消息。</p>
+<h4 id="最后，是否清楚这个几者之间的对应关系呢，分析一下："><a href="#最后，是否清楚这个几者之间的对应关系呢，分析一下：" class="headerlink" title="最后，是否清楚这个几者之间的对应关系呢，分析一下："></a>最后，是否清楚这个几者之间的对应关系呢，分析一下：</h4><p>线程和handler是一对多关系，一个线程里可以有一个或者多个Handler；而线程和Looper则是一对一的关系，一个线程里只会存在一个Looper；<br>那么，从以上两个对应关系，可知，一个线程中的Handler和Looper是多对一的关系，由于一个Looper中有就一个mQueue,那么Handler和MessageQueue的关系也是多对一了,因为handler里的mQueue都是从Looper中拿到的；</p>
+<h4 id="那么，消息发送机制就是这样的："><a href="#那么，消息发送机制就是这样的：" class="headerlink" title="那么，消息发送机制就是这样的："></a>那么，消息发送机制就是这样的：</h4><p>一个线程里的一个或多个handler向mQueue发送消息，线程里的Looper通过Looper.loop()不停的在从该消息队列中取出消息，然后通过该消息的msg.target去获知发送这个消息的handler是谁，之后调用msg.target.dispatchMessage(msg)去处理该消息。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/handler/" rel="tag"># handler</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/沉浸式- 透明式- 可变状态栏解读/" rel="next" title="沉浸式，透明式，可变状态栏解读">
+                <i class="fa fa-chevron-left"></i> 沉浸式，透明式，可变状态栏解读
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTY0NC84MjA4"></div>
+    </div>
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="shi xiangyu" />
+            
+              <p class="site-author-name" itemprop="name">shi xiangyu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#我们先来分析一下Handler"><span class="nav-number">1.</span> <span class="nav-text">我们先来分析一下Handler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再来分析Looper"><span class="nav-number">2.</span> <span class="nav-text">再来分析Looper</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于MessageQueue"><span class="nav-number">3.</span> <span class="nav-text">关于MessageQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后，是否清楚这个几者之间的对应关系呢，分析一下："><span class="nav-number">4.</span> <span class="nav-text">最后，是否清楚这个几者之间的对应关系呢，分析一下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#那么，消息发送机制就是这样的："><span class="nav-number">5.</span> <span class="nav-text">那么，消息发送机制就是这样的：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shi xiangyu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">  个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">博客 &mdash;  v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
