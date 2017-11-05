@@ -131,7 +131,7 @@
 <meta property="og:site_name" content="Shixiangyu&#39;blog">
 <meta property="og:description" content="该文接着上次的PopupWindow之setFocusable与setOutsideTouchable问题, 来说一下它的另外两个方法，分别是 showAsDropDown(View anchor, int xoff, int yoff)和showAtLocation(View parent, int gravity, int x, int y) 这两个都是我们用来show出popupwindow">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-05T10:24:36.000Z">
+<meta property="og:updated_time" content="2017-11-05T10:25:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PopupWindow之showAtLocation与showAsDropDown问题">
 <meta name="twitter:description" content="该文接着上次的PopupWindow之setFocusable与setOutsideTouchable问题, 来说一下它的另外两个方法，分别是 showAsDropDown(View anchor, int xoff, int yoff)和showAtLocation(View parent, int gravity, int x, int y) 这两个都是我们用来show出popupwindow">
@@ -398,6 +398,7 @@
       
         <p>该文接着上次的PopupWindow之setFocusable与setOutsideTouchable问题, 来说一下它的另外两个方法，分别是 <code>showAsDropDown(View anchor, int xoff, int yoff)</code>和<code>showAtLocation(View parent, int gravity, int x, int y)</code></p>
 <p>这两个都是我们用来show出popupwindowd的方法，但是策略有所不同。</p>
+<a id="more"></a>
 <h4 id="showAsDropDown-View-anchor-int-xoff-int-yoff-方法"><a href="#showAsDropDown-View-anchor-int-xoff-int-yoff-方法" class="headerlink" title="showAsDropDown(View anchor, int xoff, int yoff)方法"></a>showAsDropDown(View anchor, int xoff, int yoff)方法</h4><p>这个方法没有什么好说的，在锚点anchor的正下方弹出popup，参数xoff和yoff分别是x轴和y轴的偏移量，偏移量是相对锚点anchor来说的，以anchor的左下角为参考点；</p>
 <p>但是，需要注意的是，Android 7.0版本之前，在指定位置弹出popupwindow用showAsDropDown(View anchor, int xoff, int yoff)毫无问题，但在android 7.0上，用showAsDropDown（）就需要注意下面两点了：</p>
 <ul>

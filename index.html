@@ -395,30 +395,15 @@
 
       
         
-          
-            <p>该文接着上次的PopupWindow之setFocusable与setOutsideTouchable问题, 来说一下它的另外两个方法，分别是 <code>showAsDropDown(View anchor, int xoff, int yoff)</code>和<code>showAtLocation(View parent, int gravity, int x, int y)</code></p>
+          <p>该文接着上次的PopupWindow之setFocusable与setOutsideTouchable问题, 来说一下它的另外两个方法，分别是 <code>showAsDropDown(View anchor, int xoff, int yoff)</code>和<code>showAtLocation(View parent, int gravity, int x, int y)</code></p>
 <p>这两个都是我们用来show出popupwindowd的方法，但是策略有所不同。</p>
-<h4 id="showAsDropDown-View-anchor-int-xoff-int-yoff-方法"><a href="#showAsDropDown-View-anchor-int-xoff-int-yoff-方法" class="headerlink" title="showAsDropDown(View anchor, int xoff, int yoff)方法"></a>showAsDropDown(View anchor, int xoff, int yoff)方法</h4><p>这个方法没有什么好说的，在锚点anchor的正下方弹出popup，参数xoff和yoff分别是x轴和y轴的偏移量，偏移量是相对锚点anchor来说的，以anchor的左下角为参考点；</p>
-<p>但是，需要注意的是，Android 7.0版本之前，在指定位置弹出popupwindow用showAsDropDown(View anchor, int xoff, int yoff)毫无问题，但在android 7.0上，用showAsDropDown（）就需要注意下面两点了：</p>
-<ul>
-<li><p>如果指定 PopupWindow 的高度为 MATCH_PARENT，调用 showAsDropDown(View anchor) 时，在 7.0 之前，会在锚点 anchor 下边缘到屏幕底部之间显示 PopupWindow；而在 7.0、7.1 系统上的 PopupWindow 会占据整个屏幕（除状态栏之外）。</p>
-</li>
-<li><p>如果指定 PopupWindow 的高度为自定义的值height，调用 showAsDropDown(View anchor)时， 如果 height &gt; 锚点 anchor 下边缘与屏幕底部的距离， 则还是会出现7.0、7.1上显示异常的问题；否则，不会出现该问题。</p>
-</li>
-</ul>
-<p>所以在无法避免上述的两个问题时，这时候就需要用showAtLocation（）来处理可能出现的popup显示异常问题。</p>
-<h4 id="showAtLocation-View-parent-int-gravity-int-x-int-y"><a href="#showAtLocation-View-parent-int-gravity-int-x-int-y" class="headerlink" title="showAtLocation(View parent, int gravity, int x, int y)"></a>showAtLocation(View parent, int gravity, int x, int y)</h4><p>对showAtLocation()方法的很多解释都是：“相对于父控件的位置，x和y为偏移量。”这种解释绝对是错的离谱，而且很可笑，如果是这样，那它和showAsDropDown（）方法还有什么异同，瞪大眼睛看看这个方法的参数，x不再是xoff,y也不再是yoff，从字面上来看也不是什么所谓的偏移量吧，首先，这个方法是对于整个window的屏幕以坐标来定位置的，不存在相对于某一个view，有相对也是相对整个屏幕，参数x和y是坐标。</p>
-<p>该方法的第一个参数是parent，类型是个View，这个参数名很让人误解，其实，并不是把PopupWindow放到这个parent里，并不要求这个parent是一个ViewGroup。官方文档对这个参数的解释是“<a href="https://developer.android.com/reference/android/widget/PopupWindow.html#showAtLocation(android.view.View,int,int,int" target="_blank" rel="external">a parent view to get the token from</a>)”，这个parent的作用应该是调用其getWindowToken()方法获取窗口的Token，所以，只要是该窗口上的控件就可以了。我个人开发中，一般是拿该parent在屏幕中的坐标拿来作为参考的，通过<code>parent.getLocationInWindow(location)</code>获得parent在屏幕上的坐标，其中location是一个大小为2的int数组。</p>
-<p>第二个参数很让人理解为对齐方式，当然不是，而是通过设置gravity来设置坐标原点：</p>
-<ul>
-<li>Gravity.TOP | Gravity.LEFT   以屏幕左上角为坐标原点</li>
-<li>Gravity.BOTTOM | Gravity.RIGHT  以屏幕右下角为坐标原点</li>
-<li>Gravity.LEFT  以屏幕左侧，屏幕高度 1/2 处为坐标原点</li>
-</ul>
-<p>以此类推，可根据实际情况是设置坐标原点的位置。</p>
-<p>设置了第二个参数，后面的参数x,y也就是相对于坐标原点的位置了。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/05/PopupWindow之showAtLocation与showAsDropDown问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
