@@ -123,19 +123,19 @@
 
 
 
-<meta name="description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)  沉浸式状态栏指的是，状态栏隐藏，在手指做了相关操作后，状态栏显示">
+<meta name="description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="沉浸式，透明式，可变状态栏解读">
 <meta property="og:url" content="http://yoursite.com/2017/11/05/沉浸式- 透明式- 可变状态栏解读/index.html">
 <meta property="og:site_name" content="Shixiangyu&#39;blog">
-<meta property="og:description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)  沉浸式状态栏指的是，状态栏隐藏，在手指做了相关操作后，状态栏显示">
+<meta property="og:description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5878491-ee92fde701bf4076.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5878491-9a354df989ebf3a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-05T02:30:27.000Z">
+<meta property="og:updated_time" content="2017-11-05T02:37:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="沉浸式，透明式，可变状态栏解读">
-<meta name="twitter:description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)  沉浸式状态栏指的是，状态栏隐藏，在手指做了相关操作后，状态栏显示">
+<meta name="twitter:description" content="最近项目需求中需要对statusBar做透明穿透处理，刚开始没想太多，随着开发进行，发现坑位那绝对是满满的，主要就是要对不同的API进行适配，很难做到多平台的兼顾。 android的状态栏有三种不同状态，分别是: 沉浸式状态栏 透明状态栏(又可分为“半透明”和“全透明”）(API&amp;gt;=19) 变色状态栏(API&amp;gt;=21)">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5878491-ee92fde701bf4076.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -404,6 +404,7 @@
 <li>透明状态栏(又可分为“半透明”和“全透明”）(API&gt;=19)</li>
 <li>变色状态栏(API&gt;=21)</li>
 </ul>
+<a id="more"></a>
 <p>沉浸式状态栏指的是，状态栏隐藏，在手指做了相关操作后，状态栏显示出来，例如视频播放器，在播放视频时是隐藏状态栏的，但是点击屏幕的时候，状态栏会显示出来，再例如文本阅读器，在阅读的时候是全屏的，然后从屏幕上方下滑或者下方上划，虚拟键和状态栏出现了，但却是直接覆盖在程序文字上的，这是所谓的沉浸式状态栏,而我们经常把沉浸和透明混为一谈,其实是有本质区别的。</p>
 <h4 id="半透明状态栏"><a href="#半透明状态栏" class="headerlink" title="半透明状态栏"></a>半透明状态栏</h4><p>Android4.4（API 19)以后才开始支持Android:windowTranslucentStatus属性，需要注意的是,TranslucentStatus属性虽然是从4.4开始支持的，但在 4.4 和 5.x 上的表现不同，不过都可以概括为一种半透明，4.4 是一层渐变的遮罩层,样子是这样的:</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/5878491-ee92fde701bf4076.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="bantouming.png"></p>
