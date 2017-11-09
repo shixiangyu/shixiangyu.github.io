@@ -303,6 +303,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/09/android跳转到应用通知设置界面/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shi xiangyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shixiangyu'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/09/android跳转到应用通知设置界面/" itemprop="url">android跳转到应用通知设置界面</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T10:27:05+08:00">
+                2017-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码：</p>
+<pre><code>if (android.os.Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {
+                Intent intent = new Intent();
+                intent.setAction(&quot;android.settings.APP_NOTIFICATION_SETTINGS&quot;);
+                intent.putExtra(&quot;app_package&quot;, getActivity().getPackageName());
+                intent.putExtra(&quot;app_uid&quot;, getActivity().getApplicationInfo().uid);
+                startActivity(intent);
+            } else if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.setData(Uri.parse(&quot;package:&quot; + getActivity().getPackageName()));
+                startActivity(intent);
+            }
+</code></pre><p>跳转到应用详情页面的代码如下：</p>
+<pre><code>Intent localIntent = new Intent();
+            localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT &gt;= 9) {
+                localIntent.setAction(&quot;android.settings.APPLICATION_DETAILS_SETTINGS&quot;);
+                localIntent.setData(Uri.fromParts(&quot;package&quot;, getActivity().getPackageName(), null));
+            } else if (Build.VERSION.SDK_INT &lt;= 8) {
+                localIntent.setAction(Intent.ACTION_VIEW);
+                localIntent.setClassName(&quot;com.android.settings&quot;, &quot;com.android.settings.InstalledAppDetails&quot;);
+                localIntent.putExtra(&quot;com.android.settings.ApplicationPkgName&quot;, getActivity().getPackageName());
+            }
+            startActivity(localIntent);
+</code></pre><p>对于检测app是否开启通知，同样是针对4.4以上的系统才有效:</p>
+<pre><code>NotificationManagerCompat manager = NotificationManagerCompat.from(App.getInstance().getContext());
+</code></pre><p>boolean isOpened = manager.areNotificationsEnabled();</p>
+<p>4.4以下调用该方法并不会出错，只是全部返回true,默认开启状态</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/PopupWindow之showAtLocation与showAsDropDown问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1377,7 +1548,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
