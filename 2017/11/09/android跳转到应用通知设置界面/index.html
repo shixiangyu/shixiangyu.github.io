@@ -123,18 +123,18 @@
 
 
 
-<meta name="description" content="4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码： if (android.os.Build.VERSION.SDK_INT &amp;gt;= Build.VERSION_CODES.LOLLIPOP) {                 Intent intent = new Intent();">
+<meta name="description" content="一些手机在安装自己app的时候,通知默认是关闭的,导致push推送无法真正触达到这部分用户,这时或许我们就需要在适当的时候去引导用户去开启通知. 4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码：">
 <meta name="keywords" content="消息推送">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android跳转到应用通知设置界面">
 <meta property="og:url" content="http://yoursite.com/2017/11/09/android跳转到应用通知设置界面/index.html">
 <meta property="og:site_name" content="Shixiangyu&#39;blog">
-<meta property="og:description" content="4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码： if (android.os.Build.VERSION.SDK_INT &amp;gt;= Build.VERSION_CODES.LOLLIPOP) {                 Intent intent = new Intent();">
+<meta property="og:description" content="一些手机在安装自己app的时候,通知默认是关闭的,导致push推送无法真正触达到这部分用户,这时或许我们就需要在适当的时候去引导用户去开启通知. 4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-09T02:32:28.000Z">
+<meta property="og:updated_time" content="2017-11-09T04:52:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android跳转到应用通知设置界面">
-<meta name="twitter:description" content="4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码： if (android.os.Build.VERSION.SDK_INT &amp;gt;= Build.VERSION_CODES.LOLLIPOP) {                 Intent intent = new Intent();">
+<meta name="twitter:description" content="一些手机在安装自己app的时候,通知默认是关闭的,导致push推送无法真正触达到这部分用户,这时或许我们就需要在适当的时候去引导用户去开启通知. 4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码：">
 
 
 
@@ -396,7 +396,9 @@
       
 
       
-        <p>4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码：</p>
+        <p>一些手机在安装自己app的时候,通知默认是关闭的,导致push推送无法真正触达到这部分用户,这时或许我们就需要在适当的时候去引导用户去开启通知.</p>
+<p>4.4以下并没有提过从app跳转到应用通知设置页面的Action，可考虑跳转到应用详情页面,下面是直接跳转到应用通知设置的代码：</p>
+<a id="more"></a>
 <pre><code>if (android.os.Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {
                 Intent intent = new Intent();
                 intent.setAction(&quot;android.settings.APP_NOTIFICATION_SETTINGS&quot;);
